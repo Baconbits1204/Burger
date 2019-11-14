@@ -1,8 +1,8 @@
-//pulling in requirements
+//pulling in required dependencies
 const express = require("express");
 const bodyParser = require("body-parser");
 const exphbs = require("express-handlebars");
-//running express
+//running express with the app variable
 const app = express();
 //set up port to make deployment friendly for Heroku
 const PORT = process.env.PORT || 3000;
