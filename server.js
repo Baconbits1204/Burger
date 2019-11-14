@@ -11,13 +11,14 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static("public"));
 //adding body-parser
 app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.json());
 //set up handlebars
 app.engine("handlebars", exphbs({ defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 
 
 //routes to build
-const routes = require("./controllers/burgers_controller.js/index.js");
+var routes = require("./controllers/burgers_controller.js");
 //use routes
 app.use(routes);
 //make server listen

@@ -1,7 +1,7 @@
 var express = require("express");
 var burger = require("../models/burger");
 
-var router = express.router();
+var router = express.Router();
 
 router.get("/", function(req, res) {
     burger.selectAll(function (data) {
@@ -10,6 +10,7 @@ router.get("/", function(req, res) {
         };
         console.log(hdbrsObj);
         res.render("index", hdbrsObj);
+        console.log(req);
     });
 
     router.post("/api/burgers", function(req, res) {
@@ -17,30 +18,32 @@ router.get("/", function(req, res) {
             ["burger_name", "devoured"],
             [req.body.burger_name, req.body.devoured],
             function(result) {
-                res.json({ id: result.insertID});
+                res.json({ id: result.insertId});
             }
         );
     });
     router.put("/api/burgers/:id", function (req, res) {
         var condition = "id = " +req.params.id;
 
-        console.log("condition ", condition);
-        burger.updateOne({ devoured: req.body.devoured }, condition,function (result) {
-            if (result, changedRows === 0) {
+        console.log("condition = ", condition);
+        burger.updateOne({ devoured: req.body.devoured }, condition, function(
+            result
+            ) {
+            if (result.changedRows === 0) {
                 return res.status(404).end();
-            }else{
+            } else {
                 res.status(200).end();
             }
         });
     });
-    router.delete(condition, function(req, res){
+    router.delete("/api/burgers/:id", function(req, res){
         var condition = "id = " + req.params.id;
-        console.log("condition", condition);
+        console.log("condition = ", condition);
 
-        burger.deleteOne(condition, function(result){
-            if (result, changedRows === 0) {
+        burger.deleteOne(condition, function(result) {
+            if (result.changedRows === 0) {
                 return res.status(404).end();
-            }else{
+            } else {
                 res.status(200).end();
             }
         });
